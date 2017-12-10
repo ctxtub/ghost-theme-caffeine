@@ -1,0 +1,107 @@
+<script>
+  function addSiteCount(Counter) {
+    var query = new AV.Query(Counter);
+    document.getElementsByClassName('lean_site_view')[0].style = 'display:block';
+    query.equalTo("url", '/');
+
+    query.find().then(
+      function (results) {
+        if (results.length > 0) {
+          var counter = results[0];
+          document.getElementById('lean_site_view_num').innerText = '总访问量：' + counter.get('time') + '次';
+          incrementFn(counter);
+        } else {
+          document.getElementById('lean_site_view_num').innerText = '总访问量：' + 1 + '次';
+          setNewCounter(Counter, '/', '/');
+        }
+    }).catch(
+      function (error) {
+        //find null is not a error
+        alert('Error:' + error.code + " " + error.message);
+    });
+  }
+  function addPostCount(Counter) {
+    if (!document.getElementById('post-title')) return;
+    document.getElementsByClassName('lean_post_view')[0].style = 'display:inline';
+    //use url as unique idnetfication
+    var url = window.location.hostname + window.location.pathname;
+    var title = document.getElementById('post-title').innerText;
+
+    var query = new AV.Query(Counter);
+    
+    query.equalTo("url", url);
+    query.find().then(
+      function (results) {
+        if (results.length > 0) {
+          var counter = results[0];
+          document.getElementById('lean_post_view_num').innerText = '浏览 ' + counter.get('time') + ' 次';
+          incrementFn(counter);
+        } else {
+          document.getElementById('lean_post_view_num').innerText = '浏览 ' + 1 + ' 次';
+          setNewCounter(Counter, title, url);
+        }
+    }).catch(
+      function (error) {
+        //find null is not a error
+        alert('Error:' + error.code + " " + error.message);
+    });
+  }
+  function incrementFn(counterEntry) {
+    counterEntry.increment("time", 1);
+    counterEntry.save(null, {fetchWhenSave: true}).then(
+      function (counter) {
+        // alert('readtime increment 1');
+      })
+      .catch(
+        function (counter, error) {
+          alert('Failed to increment');
+      });
+  }
+  function setNewCounter(Counter, title, url) {
+    var newcounter = new Counter();
+    newcounter.set("title", title);
+    newcounter.set("url", url);
+    newcounter.set("time", 1);
+    newcounter.save().then(
+      function (newcounter) {
+        // alert('New object created');
+      })
+      .catch(
+        function (newcounter, error) {
+          alert('Failed to create');
+      });
+  }
+
+  function initLeancode(appid, appkey) {
+    AV.initialize(appid, appkey);
+    var Counter = AV.Object.extend("Counter");
+    // addCount when enter page
+    addPostCount(Counter);
+    addSiteCount(Counter);
+
+    var query = new AV.Query(Counter);
+    query.descending("time");
+    // the sum of popular posts
+    query.limit(10);
+    query.find().then(
+    function (results) {
+      for (var i = 0; i < results.length; i++) {
+        var counter = results[i];
+        title = counter.get("title");
+        url = counter.get("url");
+        time = counter.get("time");
+        // add to the popularlist widget
+        showcontent = title + " (" + time + ")";
+        //notice the "" in href
+        $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+      }
+    }).catch(
+      function (error) {
+        alert("Error:" + error.code + " " + error.message);
+    });
+  }
+
+  if (window.lean_appid && window.lean_appkey) {
+    initLeancode(window.lean_appid, window.lean_appkey);
+  }
+</script>

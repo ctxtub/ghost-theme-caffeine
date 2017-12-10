@@ -100,7 +100,11 @@
     .meta {
         margin: 20px 0 0;
         font-size: 12px;
+        line-height: 20px;
         color: $gray;
+    }
+    .lean_post_view {
+        display: none;
     }
 }
 

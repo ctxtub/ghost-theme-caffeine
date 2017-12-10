@@ -286,6 +286,11 @@ main {
     }
 }
 
+.lean_site_view {
+    display: none;
+    margin-bottom: 12px;
+}
+
 .divider {
     margin: 10px auto;
     border-top: 1px solid $divider-color;

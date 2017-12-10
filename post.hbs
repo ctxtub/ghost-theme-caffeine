@@ -16,6 +16,10 @@
                     <time datetime="{{date published_at format="MMMM DD, YYYY"}}">{{date published_at timeago="true"}}</time>
                     <span class="tags">{{tags prefix="in " separator=" "}}</span>
                     <span class="reading-time"> ~ <span></span> read.</span>
+                    <span class="lean_post_view">
+                        <i class="fa fa-eye"></i>
+                        <span id="lean_post_view_num"></span>
+                    </span>
                 </div>
                 <h1 id="post-title">
                     {{{title}}}
@@ -27,7 +31,7 @@
              <div class="post-content">
                 {{content}}
             </div>
-            {{> post-author-credit}}
+            {{!-- {{> post-author-credit}} --}}
             {{> comments}}
         </div>
     </div>
