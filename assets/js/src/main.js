@@ -27,6 +27,10 @@ $(function() {
         $("#profile-resume").text(window.profile_resume);
     }
 
+    if (window.miitbeian) {
+        $("#miitbeian-wrap").text(window.miitbeian);
+    }
+
     // Dynamically generate tags in tags overlay
     if (window.tag_names) {
         for (var i = 0; i < window.tag_names.length; i++) {
