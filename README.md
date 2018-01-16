@@ -1,3 +1,52 @@
+# Caffeine Theme 改版介绍
+## 支援功能
+* 来必力评论系统
+* 百度统计
+* 谷歌统计
+* leancloud总访问计数&文章访问计数
+* 页脚备案号
+
+## 使用方法
+1.ghost配置页面的**Code Injection**选项卡内**Blog Header**下引入如下JS。
+
+```html
+// leancloud统计所需JS代码
+<script src="https://releases.leanapp.cn/leancloud/javascript-sdk/releases/download/v3.4.2/av-min.js
+"></script>
+
+// 配置文件
+<script>
+	var lv_id = '来必力ID';
+    var baidu_id = '百度统计ID';
+    var ga_id = '谷歌统计ID';
+    var lean_appid = 'leancloud的APPID';
+    var lean_appkey = 'leancloud的APPKEY';
+    var miitbeian = '页脚备案号';
+    
+    var profile_resume ='首页副标题';
+    var tag_names = [{name:'阅读',url: 'yue-du'},{name:'随拍',url: 'sui-pai'}]; // 搜索页标签
+</script>
+```
+
+2.ghost配置页面的**Code Injection**选项卡内**Blog Footer**下引入如下JS。
+
+```html
+// 以下为网页所需jquery等JS库，建议使用以下国内CDN文件
+<script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+
+<script src="https://cdn.bootcss.com/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdn.bootcss.com/masonry/4.0.0/masonry.pkgd.min.js"></script>
+<script src="https://cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"></script>
+
+```
+
+3.更多内容可以参考以下官方英文文档，其提供更为详尽的编译打包相关说明。
+
+ps: 其中Disqus评论相关代码已删除！
+
+---
+---
+
 # Caffeine Theme [![Build Status](https://travis-ci.org/kelyvin/caffeine-theme.svg?branch=master)](https://travis-ci.org/kelyvin/caffeine-theme) [![GitHub version](https://badge.fury.io/gh/kelyvin%2Fcaffeine-theme.svg)](https://github.com/kelyvin/caffeine-theme/releases)
 
 ![Caffeine Coding](http://i.imgur.com/NiugCmL.png)
@@ -430,3 +479,5 @@ Edit the file `assets/scss/modules/_variables.scss`. Remember that before you de
 ### Preparing for production
 
 When you are ready and want to deploy a new version, package your code using `gulp build` command, that will minify and concatenate all the necessary code.
+
+
